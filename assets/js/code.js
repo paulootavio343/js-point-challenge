@@ -1,7 +1,7 @@
 const container = document.getElementById('container');
-const undoBtn = document.getElementById('undo');
-const redoBtn = document.getElementById('redo');
-let history = [];
+const undoBtn = document.getElementById('undoBtn');
+const redoBtn = document.getElementById('redoBtn');
+let pointsHistory = [];
 let redo = [];
 let id = 0;
 
@@ -23,7 +23,7 @@ redoBtn.addEventListener('click', () => {
 
 function createPoint(coordinateX, coordinateY) {
     const object = { id: id, x: coordinateX, y: coordinateY };
-    history.push(object);
+    pointsHistory.push(object);
 
     element = `<div class="point" id="point-${id}" style="top: ${coordinateY}px; left: ${coordinateX}px;"></div>`
     container.innerHTML += element;
@@ -31,7 +31,7 @@ function createPoint(coordinateX, coordinateY) {
 };
 
 function undoPoints() {
-    const obj = history.pop();
+    const obj = pointsHistory.pop();
     const objID = obj.id;
     const coordinateX = obj.x;
     const coordinateY = obj.y;
@@ -48,11 +48,11 @@ function redoPoints() {
     container.innerHTML += element;
 
     const object = { id: firstElement.id, x: firstElement.x, y: firstElement.y };
-    history.push(object);
+    pointsHistory.push(object);
 };
 
 function checkLength() {
-    if (history.length < 1) {
+    if (pointsHistory.length < 1) {
         undoBtn.setAttribute('disabled', '');
     } else {
         undoBtn.removeAttribute('disabled');
